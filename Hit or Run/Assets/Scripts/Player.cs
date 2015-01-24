@@ -3,12 +3,12 @@ using System.Collections;
 
 public class Player : MonoBehaviour 
 {
-	public Rigidbody Bullet;
+	public GameObject Bullet;
 	public Vector3 playerPosition;
 	// Use this for initialization
 	void Start () 
 	{
-	
+	    
 	}
 	
 	// Update is called once per frame
@@ -42,9 +42,9 @@ public class Player : MonoBehaviour
 		//Create bullet with Left Click
 		if (Input.GetKeyDown (KeyCode.Mouse0)) 
 		{
-			Rigidbody clone;
-			clone = Instantiate(Bullet, new Vector3(transform.position.x + 5f , transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
-			clone.velocity = transform.TransformDirection(Vector3.right * 10);
+			GameObject clone;
+			clone = (GameObject)Instantiate(Bullet, new Vector3(transform.position.x + 5f , transform.position.y, transform.position.z), transform.rotation);
+			clone.rigidbody.velocity = transform.TransformDirection(Vector3.right * 10);
 		}
 			
 
