@@ -6,11 +6,17 @@ public class Player : MonoBehaviour
 	public Rigidbody Bullet;
 	public Vector3 playerPosition;
 	public float speed=10;
+	public int bulletsFired = 0;
+	public float timer = 0;
 	private Animator anim;
+	private bool reloading = false;
+
+	public GameObject hitBox;
 	// Use this for initialization
 	void Start () 
 	{
 		anim = GetComponent<Animator> ();
+		//hitBox = GetComponentInChildren<SpriteRenderer> ();
 	}
 
 	//Use FixedUpdate for frame-independent physics activities
@@ -60,14 +66,26 @@ public class Player : MonoBehaviour
 		//transform.RotateAround (transform.position, Vector3.forward, .1f);
 
 		//Create bullet with Left Click
-		if (Input.GetKeyDown (KeyCode.Mouse0)) 
+		if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) 
 		{
 			Rigidbody clone;
-			clone = Instantiate(Bullet, new Vector3(transform.position.x + 5f , transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
-			clone.velocity = transform.TransformDirection(Vector3.right * 10);
+			clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
+			clone.velocity = transform.TransformDirection(Vector3.up * 10);
+			bulletsFired++;
+			if(bulletsFired % 5 == 0)
+				reloading = true;
 		}
-			
+		if (bulletsFired % 5 == 0  && reloading)
+		{
+			timer += Time.deltaTime;
+			if(timer >= 3)
+			{
+				reloading = false;
+				timer = 0;
+			}
+		}
 
+		hitBox.renderer.enabled = Input.GetKey (KeyCode.Mouse1);
 	}
 
 	void hurt()
