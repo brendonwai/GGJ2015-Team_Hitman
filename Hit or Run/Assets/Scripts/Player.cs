@@ -10,11 +10,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-<<<<<<< HEAD
-	    
-=======
 		anim = GetComponent<Animator> ();
->>>>>>> f3e5e85ad5c92df35f69c5fccc66ea79f1bf26a9
 	}
 
 	//Use FixedUpdate for frame-independent physics activities
