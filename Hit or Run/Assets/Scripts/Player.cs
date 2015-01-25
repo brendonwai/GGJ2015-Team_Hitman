@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour 
+public class Player : MonoBehaviour
 {
 	public Rigidbody Bullet;
 	public Vector3 playerPosition;
@@ -53,7 +53,8 @@ public class Player : MonoBehaviour
 		else
 			anim.SetBool("walk",false);
 
-
+		if(Input.GetKeyDown(KeyCode.Mouse1))
+		   StartCoroutine(attackAnim());
 		//Character Controls
 		/*
 		if (Input.GetKey (KeyCode.A))
@@ -91,8 +92,15 @@ public class Player : MonoBehaviour
 			}
 		}
 
-		hitBox.renderer.enabled = Input.GetKey (KeyCode.Mouse1);
+
+		
 	}
+	
+	IEnumerator attackAnim(){
+		anim.SetBool ("swag", true);
+		yield return new WaitForSeconds(.25f);
+		anim.SetBool ("swag", false);
+	}	
 
 	void hurt()
 	{
