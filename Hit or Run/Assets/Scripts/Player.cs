@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
                 StartCoroutine(shootAnim());
 				Rigidbody2D clone;
 				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
-				clone.velocity = transform.TransformDirection(Vector3.up * 10);
+				clone.velocity = transform.TransformDirection(Vector3.up * 20);
 				bulletsFired++;
 				audio.Play ();
 				if (bulletsFired % 5 == 0)
