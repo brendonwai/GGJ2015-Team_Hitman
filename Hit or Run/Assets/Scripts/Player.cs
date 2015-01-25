@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		isAlive = false;
+		isAlive = true;
 		anim = GetComponent<Animator> ();
 		if (hitBox != null)
 		{
@@ -95,7 +95,8 @@ public class Player : MonoBehaviour
                 {
                     StartCoroutine(shootAnim());
                     Rigidbody2D clone;
-                    clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
+                    Vector3 pe = transform.FindChild("ProjectileEmitter").position;
+                    clone = Instantiate(Bullet, pe, transform.rotation) as Rigidbody2D;
                     clone.velocity = transform.TransformDirection(Vector3.up * 20);
                     bulletsFired++;
                     if (bulletsFired % 5 == 0)

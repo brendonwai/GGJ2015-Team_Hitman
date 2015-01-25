@@ -15,26 +15,19 @@ public class Projectile : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-        if(this.gameObject.tag == "Enemy")
-        {
-            if ((coll.tag == "Player") || (coll.tag == "Enemy"))
-            {
-                if(coll != this) //This allows enemies to shoot each other
-                {
-                    coll.GetComponent<Player>().TakeDamage();
-                    Debug.Log("Player Hit");
-                }
-                
-            }
-        }
-        else if(this.gameObject.tag == "Player")
-        {
-            if (coll.tag == "Enemy" || coll.tag == "Boss")
-            {
-                coll.GetComponent<EnemyAI>().TakeDamage();
-                Debug.Log("Enemy Hit");
-            }
-        }
+
+		if (coll.tag == "Player")
+		{
+			coll.GetComponent<Player>().TakeDamage();
+			Debug.Log("Player Hit");
+		}
+			
+		if (coll.tag == "Enemy" || coll.tag == "Boss")
+		{
+			coll.GetComponent<EnemyAI>().TakeDamage();
+			Debug.Log("Enemy Hit");
+		}
+		
 		
 	}
 }
