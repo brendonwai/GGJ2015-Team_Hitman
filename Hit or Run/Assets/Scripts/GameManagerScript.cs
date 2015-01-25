@@ -8,7 +8,7 @@ public class GameManagerScript : MonoBehaviour {
 	Player player;
 	public int karma;
 	public int numOfEnemies;
-
+	public bool bossDead = false;
 	void Awake()
 	{
 		DontDestroyOnLoad(this.gameObject);
@@ -45,6 +45,24 @@ public class GameManagerScript : MonoBehaviour {
 		
 	}
 
+	public void changeLevel(int input)
+	{
+		switch(input)
+		{
+		case 0:
+			Application.LoadLevel (input);
+			break;
+		case 1:
+			Application.LoadLevel (input);
+			break;
+		case 2:
+			Application.LoadLevel (input);
+			break;
+		case 3:
+			Application.LoadLevel (input);
+			break;
+		}
+	}
 
 	void resetPlayer()
 	{
