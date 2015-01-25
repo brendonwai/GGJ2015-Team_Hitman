@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
 	public float timer = 0;
 	private Animator anim;
 	private bool reloading = false;
+	private AudioClip bulletFire;
 
 	public bool canPunch, canShoot, canThrow = true;
 
@@ -87,6 +88,7 @@ public class Player : MonoBehaviour
 				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
 				clone.velocity = transform.TransformDirection(Vector3.up * 10);
 				bulletsFired++;
+				audio.Play ();
 				if (bulletsFired % 5 == 0)
 					reloading = true;
 			}
