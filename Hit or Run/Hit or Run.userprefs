@@ -1,10 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Exit.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Tiled2Unity\Shaders\shaTiledMap.shader">
     <Files>
-      <File FileName="Assets\Scripts\Exit.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameManagerScript.cs" Line="54" Column="12" />
-      <File FileName="Assets\Scripts\EnemyAI.cs" Line="67" Column="1" />
+      <File FileName="Assets\Tiled2Unity\Shaders\shaTiledMap.shader" Line="8" Column="54" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
