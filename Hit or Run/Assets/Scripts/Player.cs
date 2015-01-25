@@ -3,13 +3,15 @@ using System.Collections;
 
 public class Player : MonoBehaviour
 {
-	public Rigidbody Bullet;
+	public Rigidbody2D Bullet;
 	public Vector3 playerPosition;
 	public float speed=10;
 	public int bulletsFired = 0;
 	public float timer = 0;
 	private Animator anim;
 	private bool reloading = false;
+
+	public bool canPunch, canShoot, canThrow = true;
 
 	public GameObject hitBox;
 	// Use this for initialization
@@ -69,12 +71,16 @@ public class Player : MonoBehaviour
 		//Create bullet with Left Click
 		if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) 
 		{
-			Rigidbody clone;
-			clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
-			clone.velocity = transform.TransformDirection(Vector3.up * 10);
-			bulletsFired++;
-			if(bulletsFired % 5 == 0)
-				reloading = true;
+			if(canShoot)
+			{
+				Rigidbody2D clone;
+				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
+				clone.velocity = transform.TransformDirection(Vector3.up * 10);
+				bulletsFired++;
+				if (bulletsFired % 5 == 0)
+					reloading = true;
+			}
+			
 		}
 		if (bulletsFired % 5 == 0  && reloading)
 		{

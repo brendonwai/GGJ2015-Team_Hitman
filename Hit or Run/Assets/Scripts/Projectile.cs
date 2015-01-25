@@ -13,9 +13,13 @@ public class Projectile : MonoBehaviour {
 
 	}
 
-	void OnTriggerEnter(Collider coll)
+	void OnTriggerEnter2D(Collider2D coll)
 	{
 		//Destroy (this.gameObject);
-		coll.gameObject.SendMessage ("hurt");
+		if(coll.tag == "Enemy" || coll.tag == "Boss")
+        {
+            coll.GetComponent<EnemyAI>().TakeDamage();
+            Debug.Log("Enemy Hit");
+        }
 	}
 }
