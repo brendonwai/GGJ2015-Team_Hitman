@@ -73,6 +73,7 @@ public class Player : MonoBehaviour
 		{
 			if(canShoot)
 			{
+				StartCoroutine(shootAnim ());
 				Rigidbody2D clone;
 				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
 				clone.velocity = transform.TransformDirection(Vector3.up * 10);
@@ -94,6 +95,12 @@ public class Player : MonoBehaviour
 
 
 		
+	}
+
+	IEnumerator shootAnim(){
+		anim.SetBool ("shoot", true);
+		yield return new WaitForSeconds (.15f);
+		anim.SetBool ("shoot", false);
 	}
 	
 	IEnumerator attackAnim(){
