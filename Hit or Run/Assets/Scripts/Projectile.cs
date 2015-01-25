@@ -15,7 +15,10 @@ public class Projectile : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
-
+		if(coll.tag == "Environment")
+		{
+			Destroy(this.gameObject);
+		}
 		if (coll.tag == "Player")
 		{
 			coll.GetComponent<Player>().TakeDamage();

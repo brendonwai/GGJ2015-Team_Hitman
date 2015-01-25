@@ -11,7 +11,7 @@
 		private Animator anim;
 		private bool reloading = false;
 		private AudioClip bulletFire;
-		public bool alive = true;
+		public bool isAlive = true;
 
 		public bool canPunch, canShoot, canThrow = true;
 
@@ -20,11 +20,10 @@
 		void Start ()
 		{
 			anim = GetComponent<Animator> ();
-	        if (hitBox != null)
-	        {
-	            hitBox.SetActive(false);
-	            Debug.Log("Hitbox Found and Disabled");
-	        }
+			if (hitBox != null)
+			{
+				hitBox.SetActive(false);
+			}
 
 
 		}
@@ -34,7 +33,7 @@
 		{
 			//alternative character control
 			//make your life easier with this instead of setting each of wasd keys
-			if(alive)
+			if(isAlive)
 				rigidbody2D.velocity = new Vector2 (Input.GetAxis ("Horizontal")*speed, Input.GetAxis ("Vertical")*speed);
 
 			/*
@@ -56,7 +55,7 @@
 		// Update is called once per frame
 		void Update ()
 		{
-			if (alive)
+			if (isAlive)
 			{
 				if (rigidbody2D.velocity != Vector2.zero)
 						anim.SetBool ("walk", true);
@@ -85,7 +84,8 @@
 				if (canShoot) {
 					StartCoroutine (shootAnim ());
 					Rigidbody2D clone;
-					clone = Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
+                    Vector3 pe = transform.FindChild("ProjectileEmitter").position;
+					clone = Instantiate (Bullet, pe, transform.rotation) as Rigidbody2D;
 					clone.velocity = transform.TransformDirection (Vector3.up * 20);
 					bulletsFired++;
 					//audio.Play ();
@@ -108,24 +108,33 @@
 			}
 		}
 
-	    IEnumerator shootAnim()
-	    {
-	        anim.SetBool("shoot", true);
-	        yield return new WaitForSeconds(.15f);
-	        anim.SetBool("shoot", false);
-	    }
+		IEnumerator shootAnim()
+		{
+			anim.SetBool("shoot", true);
+			yield return new WaitForSeconds(.15f);
+			anim.SetBool("shoot", false);
+		}
 
 		IEnumerator attackAnim(){
-	        hitBox.SetActive(true);
+			hitBox.SetActive(true);
 			anim.SetBool ("swag", true);
 			yield return new WaitForSeconds(.25f);
 			anim.SetBool ("swag", false);
-	        hitBox.SetActive(false);
+			hitBox.SetActive(false);
 		}
 
-		void hurt()
+		public void TakeDamage()
 		{
-			alive = false;
+			isAlive = false;
+
+			SpriteRenderer sr = GetComponent<SpriteRenderer>();
+			sr.color = Color.red;
+			//GetComponent<BoxCollider2D>().enabled = false;
+			GameObject splatter = transform.FindChild("BloodSplat").gameObject;
+			splatter.SetActive(true);
+
+            Debug.Log(isAlive);
+
 			//Destoy (this.gameObject);
 		}
 	}

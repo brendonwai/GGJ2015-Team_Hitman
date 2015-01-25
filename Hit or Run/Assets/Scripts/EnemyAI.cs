@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour {
 	public Rigidbody2D Bullet;
 	private Animator anim;
 	private GameManagerScript gm;
+    private float timer;
 
 	private bool isAlive;
 
@@ -28,9 +29,16 @@ public class EnemyAI : MonoBehaviour {
 				transform.position += targetDir.normalized * .035f;
 			else
 			{
-				Rigidbody2D clone;
-				clone = Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
-				clone.velocity = transform.TransformDirection (Vector3.up * 20);
+                timer += Time.deltaTime;
+                if(timer >= 1.25)
+                {
+                    Rigidbody2D clone;
+                    Vector3 pe = transform.FindChild("ProjectileEmitter").position;
+                    clone = Instantiate(Bullet, pe, transform.rotation) as Rigidbody2D;
+                    clone.velocity = transform.TransformDirection(Vector3.up * 20);
+                    timer = 0;
+                }
+				
 			}
 			anim.SetBool("walk", true);
 		}
