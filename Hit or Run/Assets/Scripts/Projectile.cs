@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
+	public GameObject explosion;
 	// Use this for initialization
 	void Start () {
 		Destroy (gameObject, 3);
@@ -17,7 +18,12 @@ public class Projectile : MonoBehaviour {
 	{
 		if(coll.tag == "Environment")
 		{
+			//explosion = transform.FindChild("Shockwave").gameObject;
+			Instantiate (explosion,transform.position,transform.rotation);
+			Destroy (explosion,2);
 			Destroy(this.gameObject);
+			//explosion.SetActive(true);
+			Debug.Log ("Wall was hit");
 		}
 		if (coll.tag == "Player")
 		{
