@@ -88,7 +88,7 @@
 					clone = Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
 					clone.velocity = transform.TransformDirection (Vector3.up * 20);
 					bulletsFired++;
-					audio.Play ();
+					//audio.Play ();
 					if (bulletsFired % 5 == 0)
 							reloading = true;
 				}
