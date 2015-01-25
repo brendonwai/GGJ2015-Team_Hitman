@@ -18,7 +18,13 @@ public class Player : MonoBehaviour
 	void Start () 
 	{
 		anim = GetComponent<Animator> ();
-		//hitBox = GetComponentInChildren<SpriteRenderer> ();
+        if (hitBox != null)
+        {
+            hitBox.SetActive(false);
+            Debug.Log("Hitbox Found and Disabled");
+        }
+            
+
 	}
 
 	//Use FixedUpdate for frame-independent physics activities
@@ -53,8 +59,11 @@ public class Player : MonoBehaviour
 		else
 			anim.SetBool("walk",false);
 
-		if(Input.GetKeyDown(KeyCode.Mouse1))
-		   StartCoroutine(attackAnim());
+		if(Input.GetKeyDown(KeyCode.Mouse1)) //Punch
+        {
+            StartCoroutine(attackAnim());
+        }
+		   
 		//Character Controls
 		/*
 		if (Input.GetKey (KeyCode.A))
@@ -73,6 +82,7 @@ public class Player : MonoBehaviour
 		{
 			if(canShoot)
 			{
+                StartCoroutine(shootAnim());
 				Rigidbody2D clone;
 				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
 				clone.velocity = transform.TransformDirection(Vector3.up * 10);
@@ -95,11 +105,20 @@ public class Player : MonoBehaviour
 
 		
 	}
+
+    IEnumerator shootAnim()
+    {
+        anim.SetBool("shoot", true);
+        yield return new WaitForSeconds(.15f);
+        anim.SetBool("shoot", false);
+    }
 	
 	IEnumerator attackAnim(){
+        hitBox.SetActive(true);
 		anim.SetBool ("swag", true);
 		yield return new WaitForSeconds(.25f);
 		anim.SetBool ("swag", false);
+        hitBox.SetActive(false);
 	}	
 
 	void hurt()

@@ -36,7 +36,14 @@ public class GameManagerScript : MonoBehaviour {
 	void triggerRandomEvent()
 	{
 		//Check karma level before triggering event
-		RandomEvent.executeRandomEvent();
+        int triggerChance = 100 - karma;
+
+        //The higher the triggerChance, the more likely a random event will occur.
+        if((int)Random.Range(0, 100) < triggerChance)
+        {
+            RandomEvent.executeRandomEvent();
+        }
+		
 	}
 
 
