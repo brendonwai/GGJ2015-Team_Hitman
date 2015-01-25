@@ -58,6 +58,7 @@ public class EnemyAI : MonoBehaviour {
 		if(this.gameObject.tag == "Boss")
 		{
 			gm.SendMessage("triggerRandomEvent");
+			gm.bossDead = true;
 		}
 			
 
