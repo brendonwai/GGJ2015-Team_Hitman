@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour {
 	void Start () {
 		anim=GetComponent<Animator> ();
 		isAlive = true;
+		player = GameObject.FindGameObjectWithTag("Player");
 	}
 	
 	// Update is called once per frame
@@ -38,10 +39,13 @@ public class EnemyAI : MonoBehaviour {
 		{
 			gm.SendMessage("decreaseEnemyCount");
 			isAlive = false;
-			Debug.Log("Enemy Died");
 			anim.SetBool("walk", false);
 			SpriteRenderer sr = GetComponent<SpriteRenderer>();
 			sr.color = Color.red;
+            GetComponent<BoxCollider2D>().enabled = false;
+            GameObject splatter = transform.FindChild("BloodSplat").gameObject;
+            splatter.SetActive(true);
+            Debug.Log("Enemy Died");
 		}
 
 		if(this.gameObject.tag == "Boss")
