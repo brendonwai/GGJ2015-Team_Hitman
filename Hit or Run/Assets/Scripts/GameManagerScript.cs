@@ -78,5 +78,10 @@ public class GameManagerScript : MonoBehaviour {
 		karma -= 3;
 	}
 
+	public void quitGame(){
+		Application.Quit();
+		Debug.Log("quit");
+	}
+
 
 }
