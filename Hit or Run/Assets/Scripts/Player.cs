@@ -14,16 +14,17 @@ public class Player : MonoBehaviour
 	public bool canPunch, canShoot, canThrow = true;
 
 	public GameObject hitBox;
+	public bool isAlive;
 	// Use this for initialization
 	void Start () 
 	{
+		isAlive = false;
 		anim = GetComponent<Animator> ();
-        if (hitBox != null)
-        {
-            hitBox.SetActive(false);
-            Debug.Log("Hitbox Found and Disabled");
-        }
-            
+		if (hitBox != null)
+		{
+			hitBox.SetActive(false);
+		}
+			
 
 	}
 
@@ -53,76 +54,100 @@ public class Player : MonoBehaviour
 	void Update () 
 	{
 
-		if(rigidbody2D.velocity!=Vector2.zero)
-			anim.SetBool("walk",true);
-		
-		else
-			anim.SetBool("walk",false);
-
-		if(Input.GetKeyDown(KeyCode.Mouse1)) //Punch
+        if(isAlive)
         {
-            StartCoroutine(attackAnim());
-        }
-		   
-		//Character Controls
-		/*
-		if (Input.GetKey (KeyCode.A))
-			controller.Move (Vector3.left * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.D))
-			controller.Move (Vector3.right * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.W))
-			controller.Move (Vector3.up * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.S))
-			controller.Move (Vector3.down * Time.deltaTime * 5);
-			*/
-		//transform.RotateAround (transform.position, Vector3.forward, .1f);
+            if (rigidbody2D.velocity != Vector2.zero)
+                anim.SetBool("walk", true);
 
-		//Create bullet with Left Click
-		if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) 
-		{
-			if(canShoot)
-			{
-                StartCoroutine(shootAnim());
-				Rigidbody2D clone;
-				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
-				clone.velocity = transform.TransformDirection(Vector3.up * 20);
-				bulletsFired++;
-				if (bulletsFired % 5 == 0)
-					reloading = true;
-			}
-			
-		}
-		if (bulletsFired % 5 == 0  && reloading)
-		{
-			timer += Time.deltaTime;
-			if(timer >= 3)
-			{
-				reloading = false;
-				timer = 0;
-			}
-		}
+            else
+                anim.SetBool("walk", false);
+
+            if (Input.GetKeyDown(KeyCode.Mouse1)) //Punch
+            {
+                if (canPunch)
+                {
+                    StartCoroutine(attackAnim());
+                }
+                else
+                {
+                    Debug.Log("CAN'T PUNCH!");
+                }
+
+            }
+
+            //Character Controls
+            /*
+            if (Input.GetKey (KeyCode.A))
+                controller.Move (Vector3.left * Time.deltaTime * 5);
+            if (Input.GetKey (KeyCode.D))
+                controller.Move (Vector3.right * Time.deltaTime * 5);
+            if (Input.GetKey (KeyCode.W))
+                controller.Move (Vector3.up * Time.deltaTime * 5);
+            if (Input.GetKey (KeyCode.S))
+                controller.Move (Vector3.down * Time.deltaTime * 5);
+                */
+            //transform.RotateAround (transform.position, Vector3.forward, .1f);
+
+            //Create bullet with Left Click
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !reloading)
+            {
+                if (canShoot)
+                {
+                    StartCoroutine(shootAnim());
+                    Rigidbody2D clone;
+                    clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
+                    clone.velocity = transform.TransformDirection(Vector3.up * 20);
+                    bulletsFired++;
+                    if (bulletsFired % 5 == 0)
+                        reloading = true;
+                }
+                else
+                {
+                    Debug.Log("CAN'T SHOOT!");
+                }
+
+            }
+            if (bulletsFired % 5 == 0 && reloading)
+            {
+                timer += Time.deltaTime;
+                if (timer >= 3)
+                {
+                    reloading = false;
+                    timer = 0;
+                }
+            }
+        }
+		
 
 
 		
 	}
 
-    IEnumerator shootAnim()
-    {
-        anim.SetBool("shoot", true);
-        yield return new WaitForSeconds(.15f);
-        anim.SetBool("shoot", false);
-    }
+	IEnumerator shootAnim()
+	{
+		anim.SetBool("shoot", true);
+		yield return new WaitForSeconds(.15f);
+		anim.SetBool("shoot", false);
+	}
 	
 	IEnumerator attackAnim(){
-        hitBox.SetActive(true);
+		hitBox.SetActive(true);
 		anim.SetBool ("swag", true);
 		yield return new WaitForSeconds(.25f);
 		anim.SetBool ("swag", false);
-        hitBox.SetActive(false);
+		hitBox.SetActive(false);
 	}	
 
-	void hurt()
+	public void TakeDamage()
 	{
-		//Destoy (this.gameObject);
+		if(isAlive)
+        {
+            isAlive = false;
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            sr.color = Color.red;
+            GetComponent<BoxCollider2D>().enabled = false;
+            GameObject splatter = transform.FindChild("BloodSplat").gameObject;
+            splatter.SetActive(true);
+        }
 	}
 }

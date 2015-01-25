@@ -42,10 +42,10 @@ public class EnemyAI : MonoBehaviour {
 			anim.SetBool("walk", false);
 			SpriteRenderer sr = GetComponent<SpriteRenderer>();
 			sr.color = Color.red;
-            GetComponent<BoxCollider2D>().enabled = false;
-            GameObject splatter = transform.FindChild("BloodSplat").gameObject;
-            splatter.SetActive(true);
-            Debug.Log("Enemy Died");
+			GetComponent<BoxCollider2D>().enabled = false;
+			GameObject splatter = transform.FindChild("BloodSplat").gameObject;
+			splatter.SetActive(true);
+			Debug.Log("Enemy Died");
 		}
 
 		if(this.gameObject.tag == "Boss")

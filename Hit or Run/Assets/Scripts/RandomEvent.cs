@@ -6,15 +6,17 @@ public class RandomEvent : MonoBehaviour {
 
     public static void executeRandomEvent()
     {
-        int eventNum = (int)Random.Range(1, 5);
+        int eventNum = (int)Random.Range(1, 1);
         switch(eventNum)
         {
             case 1:
                 {
                     //Trigger DisableEvent
                     Debug.Log("DisableEvent Triggered!");
+                    DisableEvent.executeEvent();
                     break;
                 }
+                /*
             case 2:
                 {
                     //Trigger ReinforceEvent
@@ -32,6 +34,7 @@ public class RandomEvent : MonoBehaviour {
                     //Nothing happens
                     break;
                 }
+                 * */
         }
     }
 }

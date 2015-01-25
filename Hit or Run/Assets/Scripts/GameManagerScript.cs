@@ -16,7 +16,6 @@ public class GameManagerScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		karma = 100;
 
 		bossEnemy = GameObject.FindGameObjectWithTag("Boss");	
 		if(bossEnemy == null)
@@ -36,13 +35,13 @@ public class GameManagerScript : MonoBehaviour {
 	void triggerRandomEvent()
 	{
 		//Check karma level before triggering event
-        int triggerChance = 100 - karma;
+		int triggerChance = 100 - karma;
 
-        //The higher the triggerChance, the more likely a random event will occur.
-        if((int)Random.Range(0, 100) < triggerChance)
-        {
-            RandomEvent.executeRandomEvent();
-        }
+		//The higher the triggerChance, the more likely a random event will occur.
+		if((int)Random.Range(0, 100) < triggerChance)
+		{
+			RandomEvent.executeRandomEvent();
+		}
 		
 	}
 
