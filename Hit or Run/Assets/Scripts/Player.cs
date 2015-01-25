@@ -33,8 +33,10 @@
 		{
 			//alternative character control
 			//make your life easier with this instead of setting each of wasd keys
-			if(isAlive)
+			if(isAlive && ! Input.GetKey(KeyCode.Space))
 				rigidbody2D.velocity = new Vector2 (Input.GetAxis ("Horizontal")*speed, Input.GetAxis ("Vertical")*speed);
+			if (!isAlive)
+						speed = 0;
 
 			/*
 			playerPosition = transform.position;
@@ -55,19 +57,18 @@
 		// Update is called once per frame
 		void Update ()
 		{
-			if (isAlive)
-			{
-				if (rigidbody2D.velocity != Vector2.zero)
-						anim.SetBool ("walk", true);
-				else
-						anim.SetBool ("walk", false);
+			if (isAlive) {
+						if (rigidbody2D.velocity != Vector2.zero)
+								anim.SetBool ("walk", true);
+						else
+								anim.SetBool ("walk", false);
 
-				if (Input.GetKeyDown (KeyCode.Mouse1)) { //Punch
-						StartCoroutine (attackAnim ());
-				}
+						if (Input.GetKeyDown (KeyCode.Mouse1)) { //Punch
+								StartCoroutine (attackAnim ());
+						}
 
-							//Character Controls
-							/*
+						//Character Controls
+						/*
 			if (Input.GetKey (KeyCode.A))
 				controller.Move (Vector3.left * Time.deltaTime * 5);
 			if (Input.GetKey (KeyCode.D))
@@ -77,35 +78,38 @@
 			if (Input.GetKey (KeyCode.S))
 				controller.Move (Vector3.down * Time.deltaTime * 5);
 				*/
-			//transform.RotateAround (transform.position, Vector3.forward, .1f);
+						//transform.RotateAround (transform.position, Vector3.forward, .1f);
 
-			//Create bullet with Left Click
-			if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) {
-				if (canShoot) {
-					StartCoroutine (shootAnim ());
-					Rigidbody2D clone;
-                    Vector3 pe = transform.FindChild("ProjectileEmitter").position;
-					clone = Instantiate (Bullet, pe, transform.rotation) as Rigidbody2D;
-					clone.velocity = transform.TransformDirection (Vector3.up * 20);
-					bulletsFired++;
-					//audio.Play ();
-					if (bulletsFired % 5 == 0)
-							reloading = true;
-				}
+						//Create bullet with Left Click
+						if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) {
+								if (canShoot) {
+										StartCoroutine (shootAnim ());
+										Rigidbody2D clone;
+										Vector3 pe = transform.FindChild ("ProjectileEmitter").position;
+										clone = Instantiate (Bullet, pe, transform.rotation) as Rigidbody2D;
+										clone.velocity = transform.TransformDirection (Vector3.up * 2000 * Time.deltaTime);
+										bulletsFired++;
+										//audio.Play ();
+										if (bulletsFired % 5 == 0)
+												reloading = true;
+								}
 
-			}
-				if (bulletsFired % 5 == 0 && reloading) 
+						}
+						if (bulletsFired % 5 == 0 && reloading) {
+								timer += Time.deltaTime * Time.timeScale;
+								if (timer >= 3) {
+										reloading = false;
+										timer = 0;
+								}
+						}
+						Time.timeScale = Input.GetKey (KeyCode.Space) ? .3f : 1f;
+				
+				} 
+				else 
 				{
-					timer += Time.deltaTime;
-					if (timer >= 3)
-					{
-							reloading = false;
-							timer = 0;
-					}
+						anim.SetBool ("walk", false);
+						Time.timeScale = 1f;
 				}
-
-
-			}
 		}
 
 		IEnumerator shootAnim()
