@@ -13,6 +13,7 @@ public class EnemyAI : MonoBehaviour {
 	void Start () {
 		anim=GetComponent<Animator> ();
 		isAlive = true;
+		player = GameObject.FindGameObjectWithTag ("Player");
 	}
 	
 	// Update is called once per frame
@@ -23,7 +24,7 @@ public class EnemyAI : MonoBehaviour {
             float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
 
-            transform.position += targetDir.normalized * .1f;
+            transform.position += targetDir.normalized * .05f;
             anim.SetBool("walk", true);
         }
 		
