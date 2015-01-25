@@ -10,9 +10,10 @@ public class Player : MonoBehaviour
 	public float timer = 0;
 	private Animator anim;
 	private bool reloading = false;
-
+	public float speedTemp = 0;
+	
 	public bool canPunch, canShoot, canThrow = true;
-
+	
 	public GameObject hitBox;
 	// Use this for initialization
 	void Start () 
@@ -20,13 +21,16 @@ public class Player : MonoBehaviour
 		anim = GetComponent<Animator> ();
 		//hitBox = GetComponentInChildren<SpriteRenderer> ();
 	}
-
+	
 	//Use FixedUpdate for frame-independent physics activities
 	void FixedUpdate(){
 		//alternative character control
 		//make your life easier with this instead of setting each of wasd keys
+		speedTemp = speed;
+		if (Input.GetKey (KeyCode.Space))
+			speed = 0.0f;
 		rigidbody2D.velocity = new Vector2 (Input.GetAxis ("Horizontal")*speed, Input.GetAxis ("Vertical")*speed);
-
+		speed = speedTemp;
 		/*
 		playerPosition = transform.position;
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
@@ -42,32 +46,22 @@ public class Player : MonoBehaviour
 		}
 		*/
 	}
-
+	
 	// Update is called once per frame
 	void Update () 
 	{
-
+		
 		if(rigidbody2D.velocity!=Vector2.zero)
 			anim.SetBool("walk",true);
 		
 		else
 			anim.SetBool("walk",false);
-
+		
 		if(Input.GetKeyDown(KeyCode.Mouse1))
-		   StartCoroutine(attackAnim());
+			StartCoroutine(attackAnim());
 		//Character Controls
-		/*
-		if (Input.GetKey (KeyCode.A))
-			controller.Move (Vector3.left * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.D))
-			controller.Move (Vector3.right * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.W))
-			controller.Move (Vector3.up * Time.deltaTime * 5);
-		if (Input.GetKey (KeyCode.S))
-			controller.Move (Vector3.down * Time.deltaTime * 5);
-			*/
-		//transform.RotateAround (transform.position, Vector3.forward, .1f);
-
+		transform.RotateAround (transform.position, Vector3.forward, .1f);
+		
 		//Create bullet with Left Click
 		if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) 
 		{
@@ -92,8 +86,9 @@ public class Player : MonoBehaviour
 				timer = 0;
 			}
 		}
-
-
+		
+		Time.timeScale = Input.GetKey (KeyCode.Space) ? .3f : 1f;
+		
 		
 	}
 
@@ -108,7 +103,7 @@ public class Player : MonoBehaviour
 		yield return new WaitForSeconds(.25f);
 		anim.SetBool ("swag", false);
 	}	
-
+	
 	void hurt()
 	{
 		//Destoy (this.gameObject);
