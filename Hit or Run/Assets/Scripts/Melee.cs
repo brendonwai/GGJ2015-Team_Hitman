@@ -17,6 +17,7 @@ public class Melee : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D coll)
     {
+        Debug.Log("Melee hit something");
         //Destroy (this.gameObject);
         if (coll.tag == "Enemy" || coll.tag == "Boss")
         {

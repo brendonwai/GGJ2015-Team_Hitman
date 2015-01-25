@@ -72,6 +72,15 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>D:/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+ <HintPath>C:/Users/Khai/Development/GitHub/GGJ2015-Team_Hitman/Hit or Run/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+ </Reference>
+ <Reference Include="SyntaxTree.VisualStudio.Unity.Messaging">
+ <HintPath>C:/Users/Khai/Development/GitHub/GGJ2015-Team_Hitman/Hit or Run/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityVS.VersionSpecific">
+ <HintPath>C:/Users/Khai/Development/GitHub/GGJ2015-Team_Hitman/Hit or Run/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>D:/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
