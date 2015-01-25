@@ -5,6 +5,7 @@ public class EnemyAI : MonoBehaviour {
 
 	// Use this for initialization
 	public GameObject player;
+	public Rigidbody2D Bullet;
 	private Animator anim;
 	private GameManagerScript gm;
 
@@ -23,8 +24,14 @@ public class EnemyAI : MonoBehaviour {
 			Vector3 targetDir = player.transform.position - transform.position;
 			float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
-
-			transform.position += targetDir.normalized * .1f;
+			if(Vector3.Distance(transform.position, player.transform.position) < 5.0f)
+				transform.position += targetDir.normalized * .035f;
+			else
+			{
+				Rigidbody2D clone;
+				clone = Instantiate (Bullet, new Vector3 (transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody2D;
+				clone.velocity = transform.TransformDirection (Vector3.up * 20);
+			}
 			anim.SetBool("walk", true);
 		}
 		
