@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 	private Animator anim;
 	private bool reloading = false;
 
+	public bool canPunch, canShoot, canThrow = true;
+
 	public GameObject hitBox;
 	// Use this for initialization
 	void Start () 
@@ -68,12 +70,16 @@ public class Player : MonoBehaviour
 		//Create bullet with Left Click
 		if (Input.GetKeyDown (KeyCode.Mouse0) && !reloading) 
 		{
-			Rigidbody clone;
-			clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
-			clone.velocity = transform.TransformDirection(Vector3.up * 10);
-			bulletsFired++;
-			if(bulletsFired % 5 == 0)
-				reloading = true;
+			if(canShoot)
+			{
+				Rigidbody clone;
+				clone = Instantiate(Bullet, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation) as Rigidbody;
+				clone.velocity = transform.TransformDirection(Vector3.up * 10);
+				bulletsFired++;
+				if (bulletsFired % 5 == 0)
+					reloading = true;
+			}
+			
 		}
 		if (bulletsFired % 5 == 0  && reloading)
 		{

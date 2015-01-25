@@ -6,6 +6,7 @@ public class EnemyAI : MonoBehaviour {
 	// Use this for initialization
 	public GameObject player;
 	private Animator anim;
+	private GameManagerScript gm;
 	void Start () {
 		anim=GetComponent<Animator> ();
 	}
@@ -18,5 +19,15 @@ public class EnemyAI : MonoBehaviour {
 
 		transform.position += targetDir.normalized *.1f;
 		anim.SetBool ("walk", true);
+	}
+
+	//When this enemy dies, tell GameManager to reduce enemy count and decrease karma
+	void OnDestroy()
+	{
+			gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManagerScript>();
+			if (gm != null)
+				gm.SendMessage("decreaseEnemyCount");
+		
+
 	}
 }
